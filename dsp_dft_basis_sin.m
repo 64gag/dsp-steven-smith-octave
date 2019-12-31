@@ -1,4 +1,3 @@
-function s_k = dsp_dft_basis_sin(k, N)
+function s = dsp_dft_basis_sin(N, k, i = -1, phase = 0)
 
-i = 1:N;
-s_k = sin(2 * pi * k * i / N);
+s = dsp_dft_basis_cos(N, k, i, phase - pi / 2);

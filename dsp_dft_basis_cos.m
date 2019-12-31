@@ -1,4 +1,7 @@
-function s_k = dsp_dft_basis_cos(k, N)
+function c = dsp_dft_basis_cos(N, k, i = -1, phase = 0)
 
-i = 1:N;
-s_k = cos(2 * pi * k * i / N);
+if (i == -1)
+    i = (0 : N - 1)';
+end
+
+c = cos(2 * pi * k * i / N + phase);
