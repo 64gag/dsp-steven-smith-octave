@@ -1,5 +1,6 @@
 function p = dsp_plot(y, plot_title)
 
-p = plot(y, 'o');
-xticks(1:rows(y));
+x = 0 : rows(y) - 1;
+p = plot(x, y, 'o');
+xticks(x);
 title(plot_title);
