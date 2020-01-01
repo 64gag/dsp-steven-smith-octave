@@ -1,4 +1,4 @@
-function X = dsp_dft_simultaneous_equations(x)
+function [X_real, X_imaginary] = dsp_dft_simultaneous_equations(x)
 
 % To do this, take the first sample from each sinusoid and add them together.
 % The sum must be equal to the first sample in the time domain signal,
@@ -8,10 +8,26 @@ function X = dsp_dft_simultaneous_equations(x)
 
 N = rows(x);
 
-for i = 1 : N
-    sines_addition = 0
-    for k = 0 : N / 2 - 1
-        sines_addition += dsp_dft_basis_cos(k, N)(i) + dsp_dft_basis_sin(k, N)(i);
+A = zeros(N);
+
+for i = 0 : N - 1
+    for k = 0 : N / 2
+        A(i + 1, k + 1) = dsp_dft_basis_cos(N, k, i);
+
+        if (k >= 1 && k <= N)
+            A(i + 1, N / 2 + k + 1) = dsp_dft_basis_sin(N, k, i);
+        end
     end
-    x(i) == sines_addition
 end
+
+% Equations solving through matrices is usually expressed using the
+% notation A * x = b
+% Unfortunately in this case 'x' holds the time domain signal...
+% (TODO change names maybe?)
+b = x;
+
+eq_solution = linsolve(A, b);
+amplitudes_real = eq_solution(1 : N / 2 + 1);
+amplitudes_imaginary = [0; eq_solution(N / 2 + 2 : N); 0];
+
+[X_real, X_imaginary] = dsp_dft_from_synthesis_amplitudes(amplitudes_real, amplitudes_imaginary);
