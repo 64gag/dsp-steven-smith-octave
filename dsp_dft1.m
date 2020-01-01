@@ -1,4 +1,4 @@
-function [X_real, X_imaginary] = dsp_dft1(x)
+function X = dsp_dft1(x)
 
 % DFT by Simultaneous Equations
 
@@ -29,7 +29,10 @@ end
 b = x;
 
 eq_solution = linsolve(A, b);
-amplitudes_real = eq_solution(1 : N / 2 + 1);
-amplitudes_imaginary = [0; eq_solution(N / 2 + 2 : N); 0];
 
-[X_real, X_imaginary] = dsp_dft_from_synthesis_amplitudes(amplitudes_real, amplitudes_imaginary);
+amplitudes_real = eq_solution(1 : N / 2 + 1);
+amplitudes_imag = [0; eq_solution(N / 2 + 2 : N); 0];
+
+amplitudes = complex(amplitudes_real, amplitudes_imag);
+
+X = dsp_dft_from_synthesis_amplitudes(amplitudes);
