@@ -1,4 +1,6 @@
-function [X_real, X_imaginary] = dsp_dft_simultaneous_equations(x)
+function [X_real, X_imaginary] = dsp_dft1(x)
+
+% DFT by Simultaneous Equations
 
 % To do this, take the first sample from each sinusoid and add them together.
 % The sum must be equal to the first sample in the time domain signal,

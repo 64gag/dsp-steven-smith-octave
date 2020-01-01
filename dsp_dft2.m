@@ -1,4 +1,6 @@
-function [X_real, X_imaginary] = dsp_dft_correlation(x)
+function [X_real, X_imaginary] = dsp_dft2(x)
+
+% DFT by Correlation
 
 N = rows(x);
 
